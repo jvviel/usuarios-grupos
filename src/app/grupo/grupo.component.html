@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-header">
+      Grupos
+    </div>
+    <div class="card-body">
+      <div class="col-md-2">
+        <button type="button" class="btn btn-primary" (click)="abrirSidebar()"><i class="pi pi-plus"></i>
+          Novo</button>
+      </div>
+      <br>
+  
+      <div class="col-12">
+        <p-table [value]="grupos">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Id</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-grupo>
+            <tr>
+              <td>{{grupo.id}}</td>
+              <td>{{grupo.descricao}}</td>
+              <td>
+                <button type="button" class="btn btn-warning" (click)="editar(grupo.id)"><i
+                    class="pi pi-pencil" style="font-size: 20px"></i></button>
+                <button type="button" class="btn btn-danger" (click)="excluir(grupo.id)"><i
+                    class="pi pi-trash" style="font-size: 20px"></i></button>
+              </td>
+            </tr>
+            <div *ngIf="grupos.length === 0">
+              Nenhum registro encontrado
+            </div>
+          </ng-template>
+        </p-table>
+        <p-paginator [rows]="grupos" [totalRecords]="grupos.length" [rowsPerPageOptions]="[7,15,30]"></p-paginator>
+      </div>
+  
+    </div>
+  </div>
+  
+  <p-dialog header="Novo Usuario" [(visible)]="sideBarForm" width="400">
+    <h3 style="font-weight:normal">Novo Grupo</h3>
+    <br>
+    <div>
+      <form [formGroup]="myForm">
+  
+        <input type="hidden" formControlName="id">
+        <div>
+          <label>Descrição</label>
+          <input formControlName="descricao" type="text" class="form-control">
+        </div>
+  
+        <br>
+        <div class="row">
+          <div class="col-6 col-sm-4">
+            <button type="submit" class="btn btn-success" (click)="setFormSalvar()">Salvar</button>
+          </div>
+          <div class="col-6 col-sm-4">
+            <button type="button" class="btn btn-danger" (click)="fecharSidebar()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+  

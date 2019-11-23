@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="card-header">
+        Usuarios
+    </div>
+    <div class="card-body">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary" (click)="abrirSidebar()"><i class="pi pi-plus"></i>
+                Novo</button>
+        </div>
+        <br>
+
+        <div class="col-12">
+            <p-table [value]="users">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Login</th>
+                        <th>Ações</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-usuario>
+                    <tr>
+                        <td>{{usuario.nome}}</td>
+                        <td>{{usuario.email}}</td>
+                        <td>{{usuario.login}}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning" (click)="editar(usuario.id)"><i
+                                    class="pi pi-pencil" style="font-size: 20px"></i></button>
+                            <button type="button" class="btn btn-danger" (click)="excluir(usuario.id)"><i
+                                    class="pi pi-trash" style="font-size: 20px"></i></button>
+                        </td>
+                    </tr>
+                    <div *ngIf="users.length === 0">
+                        Nenhum registro encontrado
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+
+<p-dialog header="Novo Usuario" [(visible)]="sideBarForm" width="400">
+    <!-- <p-sidebar [(visible)]="sideBarForm" [baseZIndex]="10000"> -->
+    <h3 style="font-weight:normal">Novo Usuario</h3>
+    <br>
+    <div>
+        <form [formGroup]="myForm">
+
+            <input type="hidden" formControlName="id">
+            <div>
+                <label>Nome</label>
+                <input formControlName="nome" type="text" class="form-control">
+                <label>Email</label>
+                <input formControlName="email" type="text" class="form-control">
+                <label>Login</label>
+                <input formControlName="login" type="text" class="form-control">
+                <label>Senha</label>
+                <input formControlName="senha" type="password" pPassword class="form-control">
+                <label>Grupo</label><br>
+                <p-dropdown [options]="grupos" [(ngModel)]="idGrupo"></p-dropdown>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-6 col-sm-4">
+                    <button type="submit" class="btn btn-success" (click)="setFormSalvar()">Salvar</button>
+                </div>
+                <div class="col-6 col-sm-4">
+                    <button type="button" class="btn btn-danger" (click)="fecharSidebar()">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- </p-sidebar> -->
+</p-dialog>
